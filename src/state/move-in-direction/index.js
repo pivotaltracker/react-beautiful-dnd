@@ -36,7 +36,7 @@ export default ({ state, type }: Args): ?PublicResult => {
   const home: DroppableDimension =
     state.dimensions.droppables[state.critical.droppable.id];
   // use home when not actually over a droppable (can happen when move is disabled)
-  const isOver: DroppableDimension = isActuallyOver || home;
+  let isOver: DroppableDimension = isActuallyOver || home;
 
   const direction: Direction = isOver.axis.direction;
   const isMovingOnMainAxis: boolean =
@@ -58,6 +58,26 @@ export default ({ state, type }: Args): ?PublicResult => {
   const previousPageBorderBoxCenter: Position =
     state.current.page.borderBoxCenter;
   const { draggables, droppables } = state.dimensions;
+
+  if(type === 'MOVE_UP' && state.impact.destination.index === 0) {
+    let droppableId = state.impact.destination.droppableId;
+    let droppablesSortedByY = Object.values(droppables).sort(function(a, b) {
+      if (a.subject.active.top < b.subject.active.top) {
+        return -1;
+      }
+      if (a.subject.active.top > b.subject.active.top) {
+        return 1;
+      }
+      return 0;
+    });
+    console.log("droppablesSortedByY:", droppablesSortedByY);
+    let myDroppableIndex = droppablesSortedByY.findIndex(function(droppable) {
+        return droppable.descriptor.id === droppableId;
+    });
+    console.log("myDroppableIndex:", myDroppableIndex);
+    isOver = droppablesSortedByY[myDroppableIndex > 0 ? myDroppableIndex - 1 : 0];
+    console.log("isOver:", isOver);
+  }
 
   return isMovingOnMainAxis
     ? moveToNextPlace({

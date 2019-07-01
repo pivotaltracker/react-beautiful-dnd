@@ -45,6 +45,8 @@ export default ({
     return null;
   }
 
+  console.log("we're in");
+
   const axis: Axis = source.axis;
   const isBetweenSourceClipped = isWithin(active[axis.start], active[axis.end]);
   const candidates: DroppableDimension[] = toDroppableList(droppables)

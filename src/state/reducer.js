@@ -59,6 +59,7 @@ const postDroppableChange = (
 const idle: IdleState = { phase: 'IDLE', completed: null, shouldFlush: false };
 
 export default (state: State = idle, action: Action): State => {
+  console.log("action: ", action);
   if (action.type === 'CLEAN') {
     return idle;
   }

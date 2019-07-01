@@ -32,7 +32,7 @@ type Args = {|
 |};
 
 export default ({
-  isMovingForward,
+  isMovingForward, // false
   draggable,
   destination,
   draggables,
@@ -42,6 +42,18 @@ export default ({
   previousClientSelection,
   onLift,
 }: Args): ?PublicResult => {
+  console.log("===begin moveToNextPlace:===");
+  console.log("isMovingForward: ", isMovingForward);
+  console.log("draggable", draggable);
+  console.log("destination", destination);
+  console.log("draggables", draggables);
+  console.log("previousImpact", previousImpact);
+  console.log("viewport", viewport);
+  console.log("previousPageBorderBoxCenter", previousPageBorderBoxCenter);
+  console.log("previousClientSelection", previousClientSelection);
+  console.log("onLift", onLift);
+  console.log("===end moveToNextPlace:===");
+
   if (!destination.isEnabled) {
     return null;
   }
